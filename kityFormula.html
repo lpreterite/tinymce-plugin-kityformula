@@ -65,7 +65,8 @@ function getQueryVariable(variable){
 //处理TinyMCE编辑器的事件
 window.addEventListener('message', function (event) {
   var data = event.data;
-  kfe.execCommand('get.image.data', function(data){
+  if(typeof window.kfe == 'undefined' || data != 'save') return;
+  window.kfe.execCommand('get.image.data', function(data){
         var latex = kfe.execCommand('get.source');
         window.parent.postMessage({
             mceAction: 'insertContent',
@@ -93,13 +94,13 @@ jQuery( function ($) {
             //处理地址栏的参数并加载到编辑器中
             var c=getQueryVariable("c")
             if(c){
-                this.execCommand( "render",decodeURIComponent(c) );
+                KFEditor.execCommand( "render",decodeURIComponent(c) );
             }else{
-                this.execCommand( "render","\\placeholder" );
+                KFEditor.execCommand( "render","\\placeholder" );
             };
 
             this.execCommand( "focus" );
-            window.kfe = this;
+            window.kfe = KFEditor;
         } );
     } else {
         $( "#tips").css( "color", "black" );

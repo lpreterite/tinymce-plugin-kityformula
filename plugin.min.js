@@ -2,18 +2,24 @@ tinymce.PluginManager.add('kityformula-editor', function(editor, url) {
 
     var baseURL = tinymce.baseURL+'/plugins/kityformula-editor/kityFormula.html';
 
-    editor.on('dblclick',function(){
-        var sel=editor.selection.getContent();
-        var path=/\<img(.*?)src="data:image\/png;base64,[A-Za-z0-9+/=]*"(.*?)data-latex="(.*?)" \/>/g;
-        var path2=/data-latex="(.*?)"/g;
+    editor.on('dblclick',function(e){
+        // var sel=editor.selection.getContent();
+        // var path=/\<img(.*?)src="data:image\/png;base64,[A-Za-z0-9+/=]*"(.*?)data-latex="(.*?)" \/>/g;
+        // var path2=/data-latex="(.*?)"/g;
 
-        if(sel.search(path)==0){
-            sel.replace(path2,function($0,$1){
-                var param=encodeURIComponent($1);
-                openDialog(param);
-                return $0;
-            });
-        };
+        // if(sel.search(path)==0){
+        //     sel.replace(path2,function($0,$1){
+        //         var param=encodeURIComponent($1);
+        //         openDialog(param);
+        //         return $0;
+        //     });
+        // };
+        var rng = editor.selection.getRng();
+        if(rng.collapsed) return;
+        var latex = e.target.dataset['latex'];
+        if(!latex) return;
+        var param=encodeURIComponent(latex);
+        openDialog(param);
     });
 
     var openDialog = function(param) {
