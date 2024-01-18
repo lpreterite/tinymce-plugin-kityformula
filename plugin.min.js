@@ -2,24 +2,17 @@ tinymce.PluginManager.add('kityformula-editor', function(editor, url) {
 
     var baseURL = tinymce.baseURL+'/plugins/kityformula-editor/kityFormula.html';
 
-    editor.on('dblclick',function(e){
-        // var sel=editor.selection.getContent();
-        // var path=/\<img(.*?)src="data:image\/png;base64,[A-Za-z0-9+/=]*"(.*?)data-latex="(.*?)" \/>/g;
-        // var path2=/data-latex="(.*?)"/g;
+    function getOptions(editor){
+      var node = editor.selection.getNode();
+      var rng = editor.selection.getRng();
+      if(rng.collapsed) return;
+      var latex = node.dataset['latex'];
+      if(!latex) return;
+      return encodeURIComponent(latex);
+    }
 
-        // if(sel.search(path)==0){
-        //     sel.replace(path2,function($0,$1){
-        //         var param=encodeURIComponent($1);
-        //         openDialog(param);
-        //         return $0;
-        //     });
-        // };
-        var rng = editor.selection.getRng();
-        if(rng.collapsed) return;
-        var latex = e.target.dataset['latex'];
-        if(!latex) return;
-        var param=encodeURIComponent(latex);
-        openDialog(param);
+    editor.on('dblclick',function(e){
+        openDialog(getOptions(editor));
     });
 
     var openDialog = function(param) {
@@ -53,18 +46,18 @@ tinymce.PluginManager.add('kityformula-editor', function(editor, url) {
         });
     };
 
-    
+
     editor.ui.registry.addButton('kityformula-editor', {
         text: '公式',
         tooltip: '插入公式',
         onAction: function() {
-            openDialog();
+            openDialog(getOptions(editor));
         }
     });
     editor.ui.registry.addMenuItem('kityformula-editor', {
         text: '公式',
         onAction: function() {
-            openDialog();
+            openDialog(getOptions(editor));
         }
     });
     return {
