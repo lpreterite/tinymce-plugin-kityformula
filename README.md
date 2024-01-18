@@ -1,4 +1,5 @@
 # tinymce-plugin-kityformula
+
 公式编辑器的tinymce插件
 
 ## 安装
@@ -17,6 +18,14 @@ tinymce.init({
     toolbar: "code kityformula-editor",
 });
 ```
+
+## 交互说明
+
+支持的功能方式包括：
+
+- 工具栏点击【公式】按钮插入新公式
+- 选中公式图片后，双击编辑公式
+- 选中公式图片后，点击工具栏【公式】按钮编辑公式
 
 ## 来源说明
 
