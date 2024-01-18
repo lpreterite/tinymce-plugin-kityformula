@@ -64,7 +64,8 @@ tinymce.PluginManager.add('kityformula-editor', function(editor, url) {
         getMetadata: function() {
             return  {
                 name: "公式",
-                url: "http://hgcserver.gitee.io",
+                author: "PackyTang <lpreterite@126.com>",
+                origin: "https://github.com/lpreterite/tinymce-plugin-kityformula"
             };
         }
     };
